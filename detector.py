@@ -25,7 +25,16 @@ class TextDetector:
       (scan-for-product-names text)    ; 直接产品名称
       (scan-for-brand-hints text)      ; 品牌暗示
       (scan-for-phonetic-variants text); 谐音/变体
+      ; 增强品牌识别
+      (detect-ambiguous-brand-names text) ; 检测模糊品牌名称
+      (analyze-industry text)          ; 分析可能的行业
       (return surface-features))
+    
+    (function analyze-industry (text)
+      ; 行业分析
+      (detect-industry-keywords text)  ; 检测行业关键词
+      (analyze-context-for-industry text) ; 上下文行业分析
+      (return industry-features))
     
     (function deep-level-scan (text)
       ; 深层分析
@@ -40,6 +49,8 @@ class TextDetector:
       ; 联系方式分析
       (detect-direct-contacts text)    ; 直接联系方式
       (detect-indirect-contacts text)  ; 间接联系暗示
+      ; 增强联系方式识别
+      (detect-implied-contact-methods text) ; 检测隐含的联系方法
       (analyze-dm-guidance text)       ; 私信引导分析
       (detect-contact-euphemisms text) ; 委婉表达
       (detect-symbol-number-mix text)  ; 符号和数字混合
@@ -77,6 +88,10 @@ class TextDetector:
    - 识别完整的联系方式模式
    - 验证是否构成有效的通讯号码
 
+7. 私信暗示：
+   - 使用“滴滴”、“dd”等词模仿电话铃声，暗示私信联系
+   - 识别此类常见的隐晦表达方式
+
     (function analyze-human-nature (text)
       ; 人性分析
       (analyze-desire-triggers text)   ; 欲望触发
@@ -91,6 +106,8 @@ class TextDetector:
       (evaluate-manipulation-level text); 操纵程度
       (assess-ethical-concerns text)    ; 伦理考量
       (consider-social-impact text)     ; 社会影响
+      ; 增强反思
+      (consider-brand-and-contact-clarity text) ; 考虑品牌和联系方式的清晰度
       (return reflection-results))))
 
 分析输出要求：
@@ -118,15 +135,21 @@ class TextDetector:
 1. 分析过程（自然语言）
 2. JSON结果：
 {
-    "product_name": "识别到的产品名称",
+    "product_name": "识别到的产品名称，如果不确定但有暗示，请使用'产品名（可能）'的格式，例如'hood卡（可能）'。即使不完全确定也要尽可能填写",
     "selling_points": "营销卖点",
-    "contact_info": "联系方式",
+    "contact_info": "联系方式，如果暗示私信等间接联系方式，也请填写，例如'私信联系（暗示）'",
     "is_ad": true/false,
     "reason": "综合判定原因",
     "manipulation_level": "操纵程度评估",
     "ethical_concerns": "伦理问题说明",
     "social_impact": "社会影响评估"
-}"""
+}
+
+注意：
+- 产品名称即使不完全确定也要填写，使用"（可能）"标注
+- 联系方式即使是暗示性的也要填写，使用"（暗示）"标注
+- 避免使用"未识别"或"未提供"等模糊表述
+"""
 
         user_prompt = text
 
