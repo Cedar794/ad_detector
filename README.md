@@ -36,11 +36,17 @@ AI Open Day活动作品，仅用于学习交流。
 
 ## 🚀 如何使用
 
-1. 克隆项目到本地：
+1. 克隆项目到本地
+```bash
+git clone https://github.com/Cedar794/ad_detector.git
+```
+
+2. 安装依赖
 ```bash
 pip install -r requirements.txt
 ```
-2. 配置API密钥：
+
+3. 配置API密钥：
    - 在项目根目录创建 `.streamlit/secrets.toml` 文件
    - 添加你的DeepSeek API密钥
    - 示例：
@@ -48,6 +54,7 @@ pip install -r requirements.txt
    [APIKEY]
    deepseek_api_key = "your_deepseek_api_key"
    ```
+
 4. 运行应用
 ```bash
 streamlit run app.py
