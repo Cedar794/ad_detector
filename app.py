@@ -16,12 +16,25 @@ def main():
         if text_input:
             with st.spinner('🔍 正在仔细检测中，请稍候...'):
                 st.divider()
+                
+                # 预处理文本
+                cleaned_text = text_detector.preprocess_text(text_input)
+                
+                # 显示清洗后的文本
+                st.subheader("🧹 清洗后的文本：")
+                st.write(cleaned_text)
+                
+                if cleaned_text == "无广告内容":
+                    st.success("✅ 清洗后未发现广告相关内容，直接进行深度处理。")
+                else:
+                    st.info("🔍 清洗后发现广告相关内容，进行深度处理。")
+                
                 # 创建占位符用于流式输出
                 thinking_header = st.subheader("💭 思考过程：")
                 thinking_placeholder = st.empty()
                 
                 # 获取生成器和处理函数
-                stream_generator, process_result = text_detector.detect(text_input)
+                stream_generator, process_result = text_detector.detect(cleaned_text)
                 
                 # 流式输出思考过程
                 full_thinking = ""
@@ -83,8 +96,6 @@ def display_result(input_type, result):
                 st.write(result['social_impact'])
     else:
         st.success("✅ 未检测到广告内容")
-        if result['reason']:
-            st.write("💡 分析说明：", result['reason'])
 
 if __name__ == "__main__":
     main() 
