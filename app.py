@@ -18,23 +18,23 @@ def main():
                 st.divider()
                 
                 # 预处理文本
-                cleaned_text = text_detector.preprocess_text(text_input)
+                cleaned_result = text_detector.preprocess_text(text_input)
                 
                 # 显示清洗后的文本
                 st.subheader("🧹 清洗后的文本：")
-                st.write(cleaned_text)
-                
-                if cleaned_text == "无广告内容":
+                if cleaned_result == "无广告内容":
+                    st.write(text_input)  # 显示原始文本
                     st.success("✅ 清洗后未发现广告相关内容，直接进行深度处理。")
                 else:
+                    st.write(cleaned_result)  # 显示清洗后的文本
                     st.info("🔍 清洗后发现广告相关内容，进行深度处理。")
+                
+                # 获取生成器和处理函数
+                stream_generator, process_result = text_detector.detect(text_input)  # 传入原始文本
                 
                 # 创建占位符用于流式输出
                 thinking_header = st.subheader("💭 思考过程：")
                 thinking_placeholder = st.empty()
-                
-                # 获取生成器和处理函数
-                stream_generator, process_result = text_detector.detect(cleaned_text)
                 
                 # 流式输出思考过程
                 full_thinking = ""

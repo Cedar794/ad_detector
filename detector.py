@@ -25,7 +25,7 @@ class TextDetector:
 输出要求：
 - 只输出可能与广告相关的文本片段
 - 如果发现多个片段，用换行符分隔
-- 如果没有发现任何相关内容，输出"无广告内容"
+- 如果没有发现任何相关内容，输出"无广告内容"五个字，不要输出其他任何内容
 """
         
         messages = [
@@ -43,11 +43,10 @@ class TextDetector:
 
     def detect(self, text):
         # 首先进行预处理
-        cleaned_text = self.preprocess_text(text)
-        if cleaned_text == "无广告内容":
-            # 即使预处理未发现广告内容，也继续进行深度检测
-            cleaned_text = text
-            
+        cleaned_result = self.preprocess_text(text)
+        # 如果预处理返回"无广告内容"，则使用原始文本
+        cleaned_text = text if cleaned_result == "无广告内容" else cleaned_result
+
         """
         调用API检测文字中的广告内容
         返回格式: {'is_ad': bool, 'reason': str}
@@ -94,7 +93,7 @@ class TextDetector:
       (detect-implied-contact-methods text) ; 检测隐含的联系方法
       (analyze-dm-guidance text)       ; 私信引导分析
       (detect-contact-euphemisms text) ; 委婉表达
-      (detect-symbol-number-mix text)  ; 符号和数字混合
+      (detect-symbol-number-mix text)  ; 符号和数字和谐音字混合
       (detect-number-patterns text)    ; 号码模式识别
       (return contact-patterns))
 
@@ -107,7 +106,7 @@ class TextDetector:
    - 直接提及词：KFC、肯德基、疯狂星期四
    - 谐音变体：肯帝基、k记、K记、开封菜
    - 星期四相关：V我50、V我XX、v50、V50
-   - 变体表达：疯四、疯4、疯狂4、疯子星期四
+   - 变体表达：疯四疯4、疯狂4、疯子星期四
    - 组合识别：将品牌名与星期四相关表达结合分析
 
 3. 谐音/变体：
@@ -185,7 +184,7 @@ class TextDetector:
 {
     "product_name": "识别到的产品名称，如果不确定但有暗示，请使用'产品名（可能）'的格式，例如'hood卡（可能）'。即使不完全确定也要尽可能填写，如果完全没有则填写'无'",
     "selling_points": "营销卖点，如果没有则填写'无'",
-    "contact_info": "联系方式，如果暗示私信等间接联系方式，也请填写，例如'私信联系（暗示）'，如果没有则填写'无'",
+    "contact_info": "联系方式，如果暗示私信等间接联系方式，也请填写，例如'微信联系（暗示）'，如果没有则填写'无'",
     "is_ad": "布尔值，判定规则：当且仅当 product_name、selling_points、contact_info 都不为'无'时，才为 true，否则为 false",
     "reason": "综合判定原因",
     "manipulation_level": "操纵程度评估",
