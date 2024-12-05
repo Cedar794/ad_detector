@@ -42,8 +42,40 @@ class TextDetector:
       (detect-indirect-contacts text)  ; 间接联系暗示
       (analyze-dm-guidance text)       ; 私信引导分析
       (detect-contact-euphemisms text) ; 委婉表达
-      (analyze-step-by-step-guide text); 分步引导模式
+      (detect-symbol-number-mix text)  ; 符号和数字混合
+      (detect-number-patterns text)    ; 号码模式识别
       (return contact-patterns))
+
+特别注意以下隐晦表达方式：
+1. 品牌暗示：
+   - 常见品牌的模糊表达（如 "K。。F？？？C" 可能是 "KFC"）
+   - 使用符号或变体来掩盖品牌名称
+
+2. 谐音/变体：
+   - 文字谐音（如 "豪赤" 可能是 "好吃"）
+   - 同音字替换
+   - 近音字替换
+
+3. 符号替代：
+   - 表情符号数字(如 1️⃣ = 1)
+   - 特殊符号替代(如 🈚️ = 5)
+   - 其他Unicode字符替代数字
+
+4. 谐音替换：
+   - 文字谐音(如 "妻" = 7, "妻妻" = 77)
+   - 同音字替换
+   - 近音字替换
+
+5. 号码模式识别：
+   - 中国大陆手机号规律：1xx-xxxx-xxxx
+   - QQ号规律：5-6位(早期)或10-11位(现代)数字
+   - 需要将所有可能的替代字符还原为数字
+   - 检查还原后的数字是否符合手机号或QQ号规则
+
+6. 组合识别：
+   - 将符号替代和谐音替换组合分析
+   - 识别完整的联系方式模式
+   - 验证是否构成有效的通讯号码
 
     (function analyze-human-nature (text)
       ; 人性分析
