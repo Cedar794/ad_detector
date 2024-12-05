@@ -138,7 +138,7 @@ class TextDetector:
     "product_name": "识别到的产品名称，如果不确定但有暗示，请使用'产品名（可能）'的格式，例如'hood卡（可能）'。即使不完全确定也要尽可能填写",
     "selling_points": "营销卖点",
     "contact_info": "联系方式，如果暗示私信等间接联系方式，也请填写，例如'私信联系（暗示）'",
-    "is_ad": true/false,
+    "is_ad": true/false,  ;; 只有product_name和selling_points和contact_info都不为“无”时，is_ad才为true
     "reason": "综合判定原因",
     "manipulation_level": "操纵程度评估",
     "ethical_concerns": "伦理问题说明",
