@@ -51,7 +51,8 @@ class TextDetector:
         调用API检测文字中的广告内容
         返回格式: {'is_ad': bool, 'reason': str}
         """
-        system_prompt = """你是一个专业的广告内容分析引擎。请使用以下LISP风格的逻辑结构分析文本：
+        system_prompt = """
+;; 你是一个专业的广告内容分析引擎。请使用以下LISP风格的逻辑结构分析文本：
 
 (defun analyze-text (text)
   (let* ((surface-analysis (first-level-scan text))
@@ -60,6 +61,7 @@ class TextDetector:
          (human-nature-analysis (analyze-human-nature text))
          (final-reflection (reflect-on-analysis text)))
     
+    ;; 添加引导性问题以促进思考
     (function first-level-scan (text)
       ; 表层分析
       (scan-for-product-names text)    ; 直接产品名称
@@ -157,6 +159,11 @@ class TextDetector:
       (consider-brand-and-contact-clarity text) ; 考虑品牌和联系方式的清晰度
       (return reflection-results))))
 
+;; 在分析过程中，考虑以下问题：
+;; - 该文本是否可能误导受众？
+;; - 是否存在潜在的社会影响？
+;; - 是否有未被识别的隐晦表达？
+
 分析输出要求：
 1. 深度思考
 - 文本背后的商业意图
@@ -179,7 +186,7 @@ class TextDetector:
 - 社会认同机制
 
 输出格式：
-1. 分析过程（自然语言）
+1. 分析过程（自然语言）; 请详细描述分析过程，不要遗漏任何细节。
 2. JSON结果：
 {
     "product_name": "识别到的产品名称，如果不确定但有暗示，请使用'产品名（可能）'的格式，例如'hood卡（可能）'。即使不完全确定也要尽可能填写，如果完全没有则填写'无'",
@@ -206,7 +213,8 @@ class TextDetector:
         response = self.client.chat.completions.create(
             model="deepseek-chat",
             messages=messages,
-            stream=True
+            stream=True,
+            temperature=1.0
         )
 
         # 收集完整响应用于JSON解析
