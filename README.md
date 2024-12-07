@@ -6,7 +6,7 @@ AI Open Day活动作品，仅用于学习交流。
 **作者、作品信息：**  
 - 姓名：张悦（小兑）  
 - 学校：上海外国语大学  
-- 修改时间：2024/12/05
+- 修改时间：2024/12/07
 
 **友情链接：**  
 - [AI Open Day](https://qa3dhma45mc.feishu.cn/docx/FWaXdcIfZo8BljxcD2Dc8XOvnEd)
