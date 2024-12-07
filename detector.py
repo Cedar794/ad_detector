@@ -140,8 +140,16 @@ class TextDetector:
    - 验证是否构成有效的通讯号码
 
 8. 私信暗示：
-   - 使用“滴滴”、“dd”等词模仿电话铃声，暗示私信联系
+   - 使用"滴滴"、"dd"等词模仿电话铃声，暗示私信联系
    - 识别此类常见的隐晦表达方式
+
+9. 免费诱导识别：
+   - "免费"+"私聊"组合
+   - "白嫖"相关表达
+   - "0元"+"联系"组合
+   - "免费"+"有限名额"组合
+   - "免费"+"仅限今天"组合
+   - 将"免费"作为诱饵引导加好友或私信
 
     (function analyze-human-nature (text)
       ; 人性分析
@@ -150,6 +158,7 @@ class TextDetector:
       (analyze-social-proof text)      ; 社会认同
       (analyze-trust-building text)    ; 信任建立
       (analyze-curiosity-hooks text)   ; 好奇心诱导
+      (analyze-free-bait text)         ; 免费诱饵分析
       (return human-nature-features))
     
     (function reflect-on-analysis (text)
@@ -160,6 +169,7 @@ class TextDetector:
       ; 增强反思
       (consider-brand-and-contact-clarity text) ; 考虑品牌和联系方式的清晰度
       (return reflection-results))))
+10. AI Open Day、AIOD有关内容不是广告
 
 ;; 在分析过程中，考虑以下问题：
 ;; - 该文本是否可能误导受众？
