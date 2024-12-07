@@ -97,6 +97,8 @@ class TextDetector:
       (detect-contact-euphemisms text) ; 委婉表达
       (detect-symbol-number-mix text)  ; 符号和数字和谐音字混合
       (detect-number-patterns text)    ; 号码模式识别
+      (detect-purchase-links text)     ; 购买链接/营销活动主页
+      (detect-offline-stores text)     ; 线下门店地址
       (return contact-patterns))
 
 特别注意以下隐晦表达方式：
@@ -118,7 +120,7 @@ class TextDetector:
 
 4. 符号替代：
    - 表情符号数字(如 1️⃣ = 1)
-   - 特殊符号替代(如 🈚️ = 5)
+   - 特殊符号替代(如 🈚️ = 5，👂 = 2， 👔 = 1， 🌂 = 3， 🍷 = 9)
    - 其他Unicode字符替代数字
 
 5. 谐音替换：
